@@ -41,31 +41,28 @@ export default ({ query }, response) =>
 const use = {
   texts: (texts) =>
     Object.entries({
+      "Monokai Pro Keygen": [
+        "https://github.com/phatdev-hehe/monokai-pro-keygen",
+      ],
       ...texts,
       "Usage && Footer": [
-        "https://monokai-pro-keygen.vercel.app/api/keygen/YOUR_EMAIL_ADDRESS@EXAMPLE.COM",
+        "https://monokai-pro-keygen.vercel.app/api/YOUR_EMAIL_ADDRESS@EXAMPLE.COM",
         " ",
         "Please consider supporting the original author (Wimer Hazenberg) of this fully compatible and well-maintained editor theme, which is one of the best we have for VS Code and Sublime Text. Buying a license would help ensure its continued availability and functionality. Thank you!".toUpperCase(),
-        " ",
-        "https://github.com/phatdev-hehe/monokai-pro-keygen".toUpperCase(),
         " ",
         String(new Date()).toUpperCase(),
       ],
     })
-      .map(([title, texts]) =>
-        wrap(
-          texts
-            .map((text, index) =>
-              index === 0 ? `${title.toUpperCase()}\n^\n${text}` : text
-            )
-            .join("\n"),
-          { cut: true, width: 100 }
-        )
+      .map(([title, [firstLine, ...rest]]) =>
+        wrap([`${title.toUpperCase()}\n^\n${firstLine}`, ...rest].join("\n"), {
+          cut: true,
+          width: 100,
+        })
       )
-      .join("\n".repeat(3)),
+      .join("\n\n\n"),
   licenseKey: (email) =>
     md5(email)
-      .substring(0, 25)
+      .slice(0, 25)
       .match(/.{1,5}/g)
       .join("-"),
 };
